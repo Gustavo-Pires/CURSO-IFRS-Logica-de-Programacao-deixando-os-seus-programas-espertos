@@ -1,0 +1,668 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{atbegshi}
+\usepackage{float}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[portuguese]{babel}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titling}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    inputencoding=utf8,
+    extendedchars=true,
+    literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1 {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1 {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1 {À}{{\`A}}1 {È}{{\`E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1 {ã}{{\~a}}1 {õ}{{\~o}}1 {ñ}{{\~n}}1 {Ã}{{\~A}}1 {Õ}{{\~O}}1 {Ñ}{{\~N}}1 {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1 {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1 {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1 {€}{{\EUR}}1 {£}{{\pounds}}1 {“}{{``}}1 {”}{{''}}1 {‘}{{`}}1 {’}{{'}}1 {°}{{\degree}}1,
+    basicstyle=\ttfamily,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{orange},
+    breaklines=true,
+    showstringspaces=false
+}
+
+% Definindo estilo para o código Portugol
+\lstset{
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{gray},
+    stringstyle=\color{red},
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    breaklines=true,
+    captionpos=b,
+    language=,
+    morekeywords={programa, funcao, inicio}
+}
+
+% Definindo cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Lógica de Programação}
+\lhead{Gustavo Pires Bertaco}
+\rfoot{Página \thepage}
+
+\title{\textbf{Lógica de Programação: deixando os seus programas espertos} \\ Turma 2024A}
+\author{}
+\date{}
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{4cm}
+    {\huge\bfseries Lógica de Programação: deixando os seus programas espertos \\ Turma 2024A\par}
+    \vspace{2cm}
+    \begin{tcolorbox}[colback=blue!5!white, colframe=blue!75!black, title=Descrição do Curso]
+        \small A partir de agora, vamos deixar nossos programas mais sofisticados, com a adição de condicionais e repetições. Aproveite nossos materiais e exercícios resolvidos. Ah, e se surgir alguma dificuldade, não hesite em acessar o curso "Lógica de Programação: Começando a desenvolver seus primeiros programas", lá temos os conceitos básicos que utilizaremos aqui.
+    \end{tcolorbox}
+    \vfill
+    {\Large Gustavo Pires Bertaco\par}
+    {\large Julho 2024\par}
+\end{titlepage}
+
+\newpage
+
+\renewcommand{\contentsname}{Sumário}
+\tableofcontents
+
+\newpage
+
+\section{Operadores Relacionais lógicos e Desvio Condicional}
+\subsection{Instalando e Explorando o Portugol}
+Antes de começar os estudos, vamos conhecer o Portugol Studio.
+
+\begin{itemize}
+    \item \textbf{1-Fazendo o download e instalando o Portugol Studio}
+\end{itemize}
+
+Você pode encontrar o link para baixar o Portugol Studio na página principal do nosso curso, ou acessando em o link Download em: \href{http://lite.acad.univali.br/portugol/}{http://lite.acad.univali.br/portugol/}
+
+Após baixar, basta fazer a instalação do software.
+
+Atenção: o Portugol Studio é compatível com Windows, Linux e MAC OS. O tamanho do arquivo para download é de aproximadamente 75 MB. Dúvidas ou problemas na instalação, acesse \href{http://lite.acad.univali.br/portugol/}{http://lite.acad.univali.br/portugol/} ou entre em contato com portugol.studio@gmail.com. 
+
+\begin{itemize}
+    \item \textbf{2-Acessando pela 1a vez}
+\end{itemize}
+Sempre que você abrir o Portugol Studio, você encontrará na tela inicial, as opções para "Programar", "Ajuda", "Vídeo aulas" ou "Bibliotecas". Além disto, você terá acesso a vários exemplos de códigos, super úteis para se inspirar nas soluções. Explore!
+
+\begin{itemize}
+    \item \textbf{3-Acessando pela 1a vez}
+\end{itemize}
+Para fazer o seu programa, na tela inicial clique em "Programar". Um arquivo novo chamado "Sem título" é criado. Dentro dele, o Portugol já insere um trecho de código (ver abaixo) com a estrutura básica de um programa.
+
+\begin{lstlisting}
+programa
+{
+    funcao inicio()
+    {
+
+    }
+}
+\end{lstlisting}
+
+Como este arquivo não está mais vazio (afinal, o próprio programa o modificou), o Portugol perguntará se você deseja salvar as alterações quando sair dele. Caso não tenha acrescentado nada ao código, você não precisa salvá-lo (neste caso, selecione a opção "Não").
+
+Quando fizer os exercícios e desejar, de fato, salvar um arquivo, você deverá clicar no primeiro dos cinco ícones que ficam abaixo do título "Portugol Studio", no canto superior esquerdo da tela.
+
+Dica: Se você deixar o mouse parado em cima do ícone, serão exibidas as descrições de cada botão.
+
+Selecione então a pasta onde deseja salvar seu arquivo e clique no ícone de uma pendrive para Salvar.
+
+\subsubsection{Link para Download do Portugol Studio}
+Click \href{http://lite.acad.univali.br/portugol/}{http://lite.acad.univali.br/portugol/} link to open resource.
+
+\subsubsection{Vídeo de introdução ao Portugol Studio}
+Caro aluno,recomendamos que você assista este vídeo após ter instalado o software Portugol Studio em seu computador.
+
+\href{https://www.youtube.com/watch?v=8njsRMvongk}{https://www.youtube.com/watch?v=8njsRMvongk}
+
+
+\subsection{Introdução sobre Operadores Relacionais}
+Os operadores relacionais são aqueles que permitem a comparação entre dois valores a fim de saber se esta comparação é verdadeira ou falta. Conheça alguns operadores:
+
+> maior
+
+< menor
+
+>= maior ou igual
+
+<= menor ou igual
+
+Por exemplo, você diria que a expressão 5 > 3 é verdadeira ou falsa? Cinco é maior do que três? Sim, afinal 5 tem valor maior que 3. Agora, vamos ver se você é craque e resolve as expressões abaixo:
+
+a) 10 < 3
+
+b) 4 >= 4
+
+c) 10 + 7 < 30 - 15
+
+E então? Resolveu? Confira as suas respostas: a) falso, b) verdadeiro, c) 17 < 15? falso. No caso da letra c, lembre-se de resolver as operações aritméticas antes da relacional.
+
+Vamos agora misturar um pouco de programação com os operadores:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{img1.JPG}
+    \caption{Exemplo de Ficha de Matrícula}
+    \label{fig:img1}
+\end{figure}
+
+Descrição da imagem: Programa inicia com a declaração da variável resultado do tipo lógico. Resultado recebe o resultado da comparação que verifica se 4 é maior do que 2. Por fim, usando a função escreva é impressa a variável resultado.
+
+Veja que criamos uma variável do tipo logico e, em seguida, atribuímos o valor da expressão 4 > 2, exibindo na tela a mensagem verdadeiro.
+
+E no exemplo abaixo, você consegue dizer qual será o resultado?
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{img2.JPG}
+    \caption{Exemplo de Ficha de Matrícula}
+    \label{fig:img2}
+\end{figure}
+Descrição da imagem: Programa inicia com a declaração da variável resultado do tipo lógico e a variável x do tipo inteiro. Na sequência x recebe 2; resultado recebe o valor resultante da comparação que verifica se x multiplicado por 4 é menor do que x multiplicado por 4 e dividido por 2. Por fim, usando a função escreva é impressa a variável resultado.
+
+
+\subsection{Vídeo sobre Operadores Relacionais}
+Caro aluno,recomendamos que você leia o material sobre Operadores Relacionais antes de visualizar este vídeo.
+
+\href{https://www.youtube.com/watch?v=L8c1vbo_Toc}{https://www.youtube.com/watch?v=L8c1vbo_Toc}
+
+\subsection{Introdução sobre Operadores Lógicos}
+Os operadores lógicos raramente são utilizados no mundo real, mas acredite, no mundo da programação eles são utilizados com bastante frequência. Os três operadores lógicos são: E, OU e NÃO. E saiba que na programação eles têm a mesma função que a utilizada em nosso dia a dia. Veja só:
+
+"Hoje eu vou à escola e assistirei televisão." Nessa frase, estamos afirmando que vamos realizar as duas ações. Tudo bem que aqui não parece fazer muito sentido, mas geralmente, aplicamos os operadores a outros comandos da programação, que veremos em breve.
+
+O comando OU funciona como um elemento onde uma condição ou outra podem ser verdadeiras, e inclusive as duas opções. Veja:
+
+"Hoje eu vou à escola ou assistirei televisão". Nesse caso, eu posso ir à escola ou posso assistir televisão. Ainda, nada impede que eu faça as duas coisas.
+
+Por fim, temos o não. Ele nega qualquer possibilidade. Veja:
+
+"Hoje eu não vou à escola". Quando utilizamos não, estamos negando qualquer possibilidade de eu ir à escola.
+
+\subsection{Vídeo sobre Operadores Lógicos}
+Caro aluno, recomendamos que você leia o material sobre Operadores Lógicos antes de visualizar este vídeo.
+\href{https://www.youtube.com/watch?v=bvi40LbrOQI}{https://www.youtube.com/watch?v=bvi40LbrOQI}
+
+\subsection{Conceitos Básicos de Desvio Condicional}
+Calma, não se assuste, o nome pode ser diferente de tudo que você já viu, mas utilizamos os desvios condicionais várias vezes ao dia. Quer ver alguns exemplos?
+
+Exemplo 1: Se eu ganhar na Mega Sena, vou viajar o mundo inteiro!
+
+Exemplo 2: Se chover, não irei ao cinema.
+
+Exemplo 3: A mãe diz ao filho: "Compre 10 pães e se e sobrar troco, pode comprar um chocolate."
+
+O desvio condicional é o nome dado ao nosso famoso "Se". Na programação, ele significa que "Se" uma condição for válida, iremos executar um conjunto de comandos que virão na sequência. Portanto, ele é muito útil para as situações onde alguns comandos devem ser executados apenas se uma condição for verdadeira.
+
+Ah, como assim, uma condição for verdadeira? Como eu vejo isso? Bom, se você lembra das aulas anteriores, lá conhecemos os operadores relacionais e lógicos. Eles tinham como resposta uma condição verdadeira ou falsa? Lembrou? Bom, agora é só misturar os dois conhecimentos.
+
+Vamos pensar no exemplo 3. Suponha que você tenha 10 reais, e que o preço unitário do pão você só saberá quando chegar na padaria. Lembre-se que se tiver troco, você poderá comprar um chocolate. Então vamos fazer esse programa:
+
+\begin{lstlisting}
+programa
+
+{
+
+   funcao inicio(){
+
+       /* Criando as variaveis */
+
+       real meuDinheiro
+
+       real troco
+
+       real precoPaoUnidade
+
+       logico compraChocolate
+
+       /* Atribuindo os valores iniciais das variaveis, no caso temos 10 reais e por enquanto não podemos comprar o chocolate, afinal não sabemos se teremos o troco  */
+
+       meuDinheiro = 10.0
+
+       compraChocolate = falso
+
+       /* Realizando as operações  */
+
+       escreva ("Informe o valor do pão: ")
+
+       leia(precoPaoUnidade)
+
+       troco = meuDinheiro - (10*precoPaoUnidade)
+
+       se (troco > 0) {
+
+           compraChocolate = verdadeiro
+
+       }
+
+   }
+
+}
+\end{lstlisting}
+
+\subsection{Vídeo sobre Desvio Condicional}
+Caro aluno,recomendamos que você leia o material sobre Desvio Condicional antes de visualizar este vídeo.
+\href{https://www.youtube.com/watch?v=SHOTQ869TY0}{https://www.youtube.com/watch?v=SHOTQ869TY0}
+
+\subsection{Praticando um pouco...}
+\begin{itemize}
+    \item \textbf{Exercício 1:} Ler um valor e escrever a mensagem É MAIOR QUE 10! se o valor lido for maior que 10, caso contrário escrever NÃO É MAIOR QUE 10!
+    \item \textbf{Exercício 2:} Ler dois valores (considere que não serão lidos valores iguais) e escrever o maior deles.
+    \item \textbf{Exercício 3:} Ler dois valores (considere que não serão lidos valores iguais) e escrevê-los em ordem crescente.
+    \item \textbf{Exercício 4:} Ler um valor e escrever se é positivo, negativo ou zero.
+    \item \textbf{Exercício 5:} Ler 3 valores (considere que não serão informados valores iguais) e escrever o maior deles.
+\end{itemize}
+
+\subsection*{Gabarito}
+\begin{itemize}
+    \item \textbf{Exercício 1:} Maior que 10
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            escreva ("Informe o valor: ")
+            leia(valor)
+            se(valor > 10) {
+                escreva ("É MAIOR QUE 10!")
+            }
+            senao{
+                escreva ("NÃO É MAIOR QUE 10!")
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 2:} Maior valor
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            real valor1, valor2
+            escreva ("Informe a nota da valor 1: ")
+            leia(valor1)
+            escreva ("Informe a nota da valor 2: ")
+            leia(valor2)
+            se(valor1 > valor2) {
+                escreva ("O valor 1 é o maior")
+            }
+            senao{
+                escreva ("O valor 2 é o maior")
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 3:} Ordem crescente
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            real valor1, valor2
+            escreva ("Informe a nota da valor 1: ")
+            leia(valor1)
+            escreva ("Informe a nota da valor 2: ")
+            leia(valor2)
+            se(valor1 < valor2) {
+                escreva ("A ordem é: ", valor1, ", ", valor2)
+            }
+            senao{
+                escreva ("A ordem é: ", valor2, ", ", valor1)
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 4:} Positivo, Negativo ou Zero
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            escreva ("Informe o valor: ")
+            leia(valor)
+            se(valor == 0) {
+                escreva ("O número é zero")
+            }
+            senao{
+                se(valor > 0) {
+                    escreva ("O número é positivo")
+                }
+                senao{
+                    escreva ("O número é negativo")
+                }
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 5:} Maior de três valores
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor1, valor2, valor3
+            escreva ("Informe o valor 1: ")
+            leia(valor1)
+            escreva ("Informe o valor 2: ")
+            leia(valor2)
+            escreva ("Informe o valor 3: ")
+            leia(valor3)
+            se(valor1 > valor2 E valor1 > valor3) {
+                escreva ("O valor 1 é o maior")
+            }
+            senao{
+                se(valor2 > valor1 E valor2 > valor3) {
+                    escreva ("O valor 2 é o maior")
+                }
+                senao{
+                    escreva ("O valor 3 é o maior")
+                }
+            }
+        }
+    }
+    \end{lstlisting}
+\end{itemize}
+
+
+\section{Laços de Repetição}
+\subsection{Conceitos Básicos de Desvio Condicional}
+Os laços de repetição são comandos que, literalmente, permitem que um trecho do programa seja repetido por uma quantidade de vezes ou enquanto uma condição for verdadeira. Ele serve para casos como: imagine que você esteja em um estádio de futebol e toda vez que um time faz gol, a mensagem "Gooooool" deva ser exibida por três vezes. Bom, nesse caso, não dá muito trabalho escrever:
+
+escreva("Gooooool")
+
+escreva("Gooooool")
+
+escreva("Gooooool")
+
+Mas imagine agora que a mensagem tenha que ser apresentada mil vezes. Ou ainda, que ela seja exibida infinitamente, até que alguém peça para parar a exibição? Pois bem, para esses e outros casos é que os laços de repetição existem.
+
+Confira o próximo vídeo para conhecer mais sobre os laços de repetição.
+\subsection{Vídeo sobre Laços de Repetição}
+Caro aluno,recomendamos que você leia o material sobre Desvio Condicional antes de visualizar este vídeo.
+\href{https://www.youtube.com/watch?v=yUX_UrSB5fM}{https://www.youtube.com/watch?v=yUX_UrSB5fM}
+
+\subsection{Praticando um pouco...}
+
+\begin{itemize}
+    \item \textbf{Exercício 1:}Escreva um algoritmo para imprimir os números de 1 (inclusive) a 10 (inclusive) em ordem crescente.
+    \item \textbf{Exercício 2:} Escreva um algoritmo para imprimir os números de 1 (inclusive) a 10 (inclusive) em ordem decrescente.
+    \item \textbf{Exercício 3:}Escreva um algoritmo que calcule e imprima a tabuada do 8 (1 a 10).
+    \item \textbf{Exercício 4:}Escreva um algoritmo para ler 5 números inteiros e ao final da leitura escrever a soma total dos 5 números lidos.
+    \item \textbf{Exercício 5:} Ler 10 valores e escrever quantos desses valores lidos são NEGATIVOS.
+    \item \textbf{Exercício 6:} Ler 20 valores, calcular e escrever a média aritmética desses valores lidos.
+    \item \textbf{Exercício 7:} Faça um programa que leia 100 números inteiros e no final, escreva o maior e o menor valor lido.
+\end{itemize}
+
+\subsection*{Gabarito}
+\begin{itemize}
+    \item \textbf{Exercício 1: 1 a 10 crescente}
+    
+    \textbf{OPÇÃO COM ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            valor = 1
+            enquanto(valor <= 10) {
+                escreva (valor, "\n")
+                valor = valor + 1
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM FAÇA ... ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            valor = 1
+            faca {
+                escreva (valor, "\n")
+                valor = valor + 1
+            } enquanto(valor <= 10)
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            para (inteiro valor = 1; valor <= 10; valor++){
+                escreva (valor, "\n")
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 2: 10 a 1 ordem decrescente}
+    
+    \textbf{OPÇÃO COM ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            valor = 10
+            enquanto(valor > 0) {
+                escreva (valor, "\n")
+                valor = valor - 1
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM FAÇA ... ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            valor = 10
+            faca {
+                escreva (valor, "\n")
+                valor = valor - 1
+            } enquanto(valor > 0)
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            para (inteiro valor = 10; valor > 0; valor--){
+                escreva (valor, "\n")
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 3: Tabuada do 8}
+    
+    \textbf{OPÇÃO COM ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            valor = 1
+            enquanto(valor <= 10) {
+                escreva (valor*8, "\n")
+                valor = valor + 1
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM FAÇA ... ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor
+            valor = 1
+            faca {
+                escreva (valor*8, "\n")
+                valor = valor + 1
+            } enquanto(valor <= 10)
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            para (inteiro valor = 1; valor <= 10; valor++){
+                escreva (valor*8, "\n")
+            }
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 4: Soma 5 números}
+    
+    \textbf{OPÇÃO COM ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor, contagem, soma
+            valor = 0
+            contagem = 1
+            soma = 0
+            enquanto(contagem <= 5) {
+                leia (valor)
+                soma = soma + valor
+                contagem = contagem + 1
+            }
+            escreva("A soma é: ", soma)
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM FAÇA ... ENQUANTO}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor, contagem, soma
+            valor = 0
+            contagem = 1
+            soma = 0
+            faca {
+                leia (valor)
+                soma = soma + valor
+                contagem = contagem + 1
+            } enquanto(contagem <= 5)
+            escreva("A soma é: ", soma)
+        }
+    }
+    \end{lstlisting}
+
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor, soma
+            valor = 0
+            soma = 0
+            para(inteiro contagem = 1; contagem <= 5; contagem++) {
+                leia (valor)
+                soma = soma + valor
+            }
+            escreva("A soma é: ", soma)
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 5: Quantidade negativos}
+    
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor, soma
+            valor = 0
+            soma = 0
+            para(inteiro contagem = 1; contagem <= 10; contagem++) {
+                leia (valor)
+                se (valor < 0){
+                    soma = soma + 1
+                }
+            }
+            escreva("A quantidade de negativos é: ", soma)
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 6: Média aritmética}
+    
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro valor, soma
+            valor = 0
+            soma = 0
+            para(inteiro contagem = 1; contagem <= 20; contagem++) {
+                leia (valor)
+                soma = soma + valor
+            }
+            escreva("A média é: ", soma/20)
+        }
+    }
+    \end{lstlisting}
+
+    \item \textbf{Exercício 7: Menor e maior valor}
+    
+    \textbf{OPÇÃO COM PARA}
+    \begin{lstlisting}
+    programa
+    {
+        funcao inicio(){
+            inteiro menor, maior, valor
+            valor = 0
+            escreva("Informe os valores: ")
+            leia (valor)
+            maior = valor
+            menor = valor
+            para(inteiro contagem = 1; contagem < 100; contagem++) {
+                leia (valor)
+                se(maior < valor) {
+                    maior = valor
+                }
+                se(menor > valor) {
+                    menor = valor
+                }
+            }
+            escreva("O maior é: ", maior)
+            escreva("O menor é: ", menor)
+        }
+    }
+    \end{lstlisting}
+\end{itemize}
+
+
+\end{document}
+
